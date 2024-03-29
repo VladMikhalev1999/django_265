@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 # Create your views here.
-
+from app.models import Category
 
 """
 def index(request):
@@ -16,11 +16,8 @@ def about(request):
 
 
 def index(request):
-    categories = [
-       {"id": 1, "name": "cat 1"},
-       {"id": 2, "name": "cat 2"},
-       {"id": 3, "name": "cat 3"},
-    ]
+    categories = Category.objects.all().order_by("name", "id")
+    Category.objects.filter(name="Колье")
     return render(request, "app/index.html", {"cate": categories, "title": "Главная"})
 
 
