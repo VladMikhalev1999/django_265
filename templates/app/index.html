@@ -7,10 +7,19 @@
 
 {% block body %}
     <h1 class="text-center">Добро пожаловать на главную!</h1>
+    {% if errors.id %}
+        <div class="alert alert-danger">{{ errors.id }}</div>
+    {% endif %}
+    <a class="btn btn-primary" href="{% url "app:category_add" %}">Добавить</a>
     {% for cat in cate %}
         <div class="card">
             <h5>ИД: {{ cat.id }}</h5>
-            <p>Категория: {{ cat.name }}</p>
+            <p>Категория: <a class="btn btn-link" href="{% url "app:category_edit" cat.id %}">{{ cat.name }}</a></p>
+            <form method="POST" action="{% url "app:main" %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{ cat.id }}" name="id">
+                <input type="submit" value="Удалить" class="btn btn-danger">
+            </form>
         </div>
     {% endfor %}
 {% endblock %}

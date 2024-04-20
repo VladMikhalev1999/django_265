@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %} Категория {% endblock %}
+
+{% block body %}
+    <h2>Редактирование категории №{{ cat.id }}</h2>
+    <form method="POST" action="{% url "app:category_edit" cat.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control{% if errors.name %} is-invalid{% endif %}"
+                   name="name"
+                   value="{{ cat.name }}"
+                   placeholder="Введите название">
+            {% if errors.name %}
+                <div class="invalid-feedback">{{ errors.name }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="submit" value="Сохранить">
+        </div>
+    </form>
+{% endblock %}
